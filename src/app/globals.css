@@ -1,0 +1,266 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --font-sans: var(--font-host), ui-sans-serif, system-ui, sans-serif;
+
+  /* Greens — the brand carries the page */
+  --color-forest-950: #08201a;
+  --color-forest-900: #0c2a21;
+  --color-forest-800: #133a2d;
+  --color-forest-700: #1d4e3b;
+  --color-moss: #5d7d5a;
+  --color-sage: #a6b59d;
+  --color-sage-100: #e2e6d8;
+  --color-sprout: #cfe98e;
+
+  /* Neutrals and warm support colours */
+  --color-cream: #f1eee7;
+  --color-paper: #f8f6f1;
+  --color-stone: #d5cfc3;
+  --color-mute: #9a978d;
+  --color-ink: #141d18;
+  --color-clay: #b4613b;
+  --color-butter: #ecd58f;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root {
+  --gutter: clamp(16px, 3.4vw, 48px);
+  --header-h: 76px;
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-forest-950);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "tnum" 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-sprout);
+  color: var(--color-forest-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Layout helpers ---------- */
+.shell {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Type scale ---------- */
+.t-mega {
+  font-size: clamp(46px, 7.4vw, 140px);
+  line-height: 0.94;
+  letter-spacing: -0.048em;
+  font-weight: 400;
+}
+.t-display {
+  font-size: clamp(38px, 5.4vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  font-weight: 400;
+}
+.t-title {
+  font-size: clamp(30px, 3.6vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 400;
+}
+.t-statement {
+  font-size: clamp(28px, 3.5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+  font-weight: 400;
+}
+.t-lead {
+  font-size: clamp(17px, 1.35vw, 21px);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+.t-label {
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---------- Buttons: text roll + arrow chip ---------- */
+.btn {
+  --btn-bg: var(--color-ink);
+  --btn-fg: var(--color-paper);
+  --chip-bg: var(--color-sprout);
+  --chip-fg: var(--color-forest-950);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 54px;
+  padding: 0 7px 0 24px;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  isolation: isolate;
+  overflow: hidden;
+  transition: background-color 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo);
+  will-change: transform;
+}
+.btn-roll {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+}
+.btn-roll > span {
+  display: block;
+  transition: transform 0.55s var(--ease-out-expo);
+}
+.btn-roll > span + span {
+  position: absolute;
+  inset: 100% 0 auto 0;
+}
+.btn:hover .btn-roll > span,
+.btn:focus-visible .btn-roll > span {
+  transform: translateY(-100%);
+}
+.btn-chip {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  overflow: hidden;
+  transition: transform 0.55s var(--ease-out-expo);
+}
+.btn-chip svg {
+  transition: transform 0.55s var(--ease-out-expo);
+}
+.btn:hover .btn-chip svg {
+  animation: arrow-through 0.6s var(--ease-out-expo);
+}
+@keyframes arrow-through {
+  0% { transform: translateX(0); }
+  45% { transform: translateX(140%); }
+  46% { transform: translateX(-140%); }
+  100% { transform: translateX(0); }
+}
+.btn--light {
+  --btn-bg: var(--color-paper);
+  --btn-fg: var(--color-forest-950);
+  --chip-bg: var(--color-forest-800);
+  --chip-fg: var(--color-sprout);
+}
+.btn--sprout {
+  --btn-bg: var(--color-sprout);
+  --btn-fg: var(--color-forest-950);
+  --chip-bg: var(--color-forest-950);
+  --chip-fg: var(--color-sprout);
+}
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: currentColor;
+  padding: 0 22px;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, currentColor 28%, transparent);
+}
+.btn--ghost:hover {
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+/* ---------- Underline link ---------- */
+.link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-out-expo);
+}
+.link-line:hover,
+.link-line:focus-visible {
+  background-size: 100% 1px;
+  background-position: 0% 100%;
+}
+
+/* ---------- Image grade: keeps mixed stock photography in one family ---------- */
+.grade {
+  filter: saturate(0.82) contrast(1.03) brightness(0.98);
+}
+
+/* ---------- Split-text helpers ---------- */
+/* SplitText's own mask wrapper clips; pad each line so descenders survive the clip. */
+.line-mask {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+/* Hide content that animates in until JS takes over (no flash), but only when motion is allowed. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal],
+  .js [data-hero] {
+    visibility: hidden;
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes travel {
+  0% { left: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee {
+    animation: none;
+  }
+}
